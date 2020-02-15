@@ -403,8 +403,8 @@ module ForkingTestRunner
 
       # check if we can use merge_coverage
       if options.fetch(:merge_coverage)
-        abort "merge_coverage does not work on ruby prior to 2.3" if RUBY_VERSION < "2.3.0"
         require 'coverage'
+        abort "merge_coverage does not work on Ruby prior to 2.3 due to the lack of the Coverage.peek_result method" unless Coverage.method_defined?(:peek_result)
         klass = (class << Coverage; self; end)
         klass.prepend CoverageCapture
       end
